@@ -33,7 +33,6 @@
 
         .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
         
-        /* AQUI ESTÁ O AJUSTE: Legendas (Data, Templo, etc) agora em 22px e Negrito */
         label { color: var(--pib-verde); font-weight: 800; font-size: 22px; margin-bottom: 10px; display: block; line-height: 1.2; }
         
         input { height: 70px; border: 2px solid #bbb; border-radius: 10px; font-size: 28px; text-align: center; width: 100%; box-sizing: border-box; background-color: white; color: black; margin-bottom: 5px; }
@@ -161,6 +160,14 @@
         function nz(id) { const v = document.getElementById(id).value; return v === "" ? 0 : parseInt(v); }
 
         function gerarRelatorio() {
+            const preview = document.getElementById('relatorio-preview');
+            
+            // Lógica para recolher se já estiver aberto
+            if (preview.style.display === 'block') {
+                preview.style.display = 'none';
+                return;
+            }
+
             const dt = document.getElementById('data_contagem').value.split('-').reverse().join('/') || "__/__/____";
             
             const comp9 = nz('t9')+nz('v9')+nz('s9');
@@ -241,8 +248,8 @@ TOTAL DO CULTO DAS 11:00hrs: ${tot11}
 
 TOTAL GERAL: ${tot9 + tot11}`;
 
-            document.getElementById('relatorio-preview').innerText = rel;
-            document.getElementById('relatorio-preview').style.display = 'block';
+            preview.innerText = rel;
+            preview.style.display = 'block';
             window.scrollTo(0, document.body.scrollHeight);
             return rel;
         }
